@@ -1,6 +1,7 @@
 import scapy.all as scapy
 import socket
 import time
+from numpy import random
 
 sleep_time = 1
 
@@ -16,7 +17,7 @@ src_host = socket.gethostbyname(source_hostname)
 print(src_host)
 
 for _ in range(20):
-    packet1 = scapy.IP(src=src_host, dst=local_host)/scapy.TCP(sport=25385, dport=20, flags='S')
+    packet1 = scapy.IP(src=src_host, dst=local_host)/scapy.TCP(sport=random.randint(65534), dport=20, flags='S')
     result1 = scapy.send(packet1, count=1, verbose=False)
     if not(result1 is None):
         if result1.haslayer('TCP'):
@@ -48,7 +49,7 @@ print(src_host)
 src_p = 32700
 msg = 'team17'
 for i in range(10):
-    packet3 = scapy.IP(src=src_host, dst=local_host)/scapy.TCP(sport=src_p+i, flags="S")/msg
+    packet3 = scapy.IP(src=src_host, dst=local_host)/scapy.TCP(sport=src_p+i, flags="SFR")/msg
     result3 = scapy.send(packet3, count=1, verbose=False)
     if not(result3 is None):
         if packet3.haslayer('TCP'):
