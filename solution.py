@@ -3,7 +3,7 @@ import time
 
 src = "128.173.54.143"
 
-dst = "10.0.0.1"
+dst = "10.0.0.2"
 
 send(IP(src=src, dst=dst)/TCP(dport=20, flags="S"), count=20)
 time.sleep(5)
